@@ -11,21 +11,34 @@
       <meetings-page :username="authenticatedUsername"></meetings-page>
     </div>
     <div v-else>
-      <login-form @login="login($event)"></login-form>
-    </div>
+    
+    	<button @click="registering = false">Zaloguj</button>
+    	<button @click="registering = true">Zarejestruj</button>
+    
+    	<register-form @register="register($event)"
+      	v-if="registering"></register-form>
+      		
+    	<login-form @login="login($event)"
+      	v-else></login-form>
+      
+    </div> 
+    
   </div>
 </template>
 
 <script>
     import "milligram";
     import LoginForm from "./LoginForm";
+    import RegisterForm from "./RegisterForm";
     import MeetingsPage from "./meetings/MeetingsPage";
 
     export default {
-        components: {LoginForm, MeetingsPage},
+        components: {LoginForm, RegisterForm, MeetingsPage},
         data() {
             return {
-                authenticatedUsername: ""
+                authenticatedUsername: "",
+                registering: false,
+                dodanyUzytkownik: false
             };
         },
         methods: {
@@ -34,7 +47,18 @@
             },
             logout() {
                 this.authenticatedUsername = '';
-            }
+            },
+            register(user) {
+            	 this.$http.post('participants', user)
+            	     .then(response => {
+            	    	 //udalo sie
+            	         //this.dodanyUzytkownik = true;
+            	     })
+            	     .catch(response => {
+            	         // nie uda³o sie
+            	         
+            	     });
+            	}
         }
     };
 </script>

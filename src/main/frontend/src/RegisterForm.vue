@@ -5,6 +5,9 @@
     <label>HasÅ‚o</label>
     <input type="password" v-model="user.password">
     <button type="submit">{{ labelOfTheButton }}</button>
+    
+    
+    
   </form>
 </template>
 
@@ -18,12 +21,12 @@
         },
         methods: {
             enter() {
-                this.$emit("login", this.user);
+                this.$emit("register", this.user);
             }
         },
         computed: {
             labelOfTheButton() {
-                return this.buttonLabel || 'Zaloguj siê';
+                return this.buttonLabel || 'Zarejestruj siê';
             }
         }
     };
